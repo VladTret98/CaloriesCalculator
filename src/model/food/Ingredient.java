@@ -17,7 +17,7 @@ public class Ingredient implements Serializable {
 
 	}
 
-	public Ingredient(String name, int calories, int proteins, int fat, int carbohydrates) {
+	public Ingredient(String name, double calories, double proteins, double fat, double carbohydrates) {
 		this.name = name;
 		this.feature = new IngredientFeatures(calories, proteins, fat, carbohydrates);
 	}

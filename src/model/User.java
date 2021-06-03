@@ -6,19 +6,23 @@ import java.util.List;
 
 public class User implements Serializable {
 	private static final long serialVersionUID = -1416033834503068700L;
+
 	private String name;
-	private List<Day> days;
-	private CalCalculator calc;
+
 	private double weight;
+
+	private List<Day> days;
+
+	private CalCalculator calc;
 
 	public User() {
 
 	}
 
-	public User(String name, double weight, CalCalculator calc) {
+	public User(String name, double weight, UserGoal goal) {
 		this.name = name;
 		this.weight = weight;
-		this.calc = calc;
+		this.calc = new CalCalculator(goal);
 		this.days = new ArrayList<Day>();
 	}
 
@@ -30,6 +34,14 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
 	public List<Day> getDays() {
 		return days;
 	}
@@ -38,28 +50,12 @@ public class User implements Serializable {
 		this.days = days;
 	}
 
-	public CalCalculator getFeature() {
-		return calc;
-	}
-
-	public void setFeature(CalCalculator feature) {
-		this.calc = feature;
-	}
-
 	public CalCalculator getCalc() {
 		return calc;
 	}
 
 	public void setCalc(CalCalculator calc) {
 		this.calc = calc;
-	}
-
-	public double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(double weight) {
-		this.weight = weight;
 	}
 
 }

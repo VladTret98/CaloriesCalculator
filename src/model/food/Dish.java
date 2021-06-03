@@ -12,7 +12,7 @@ public class Dish implements Calculating, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 4863063280244027417L;
-	private List<Ingredient> ingredients;
+	private List<PartOfTheDish> ingredients;
 	private String name;
 	private Counter counter;
 	private double weight;
@@ -22,21 +22,24 @@ public class Dish implements Calculating, Serializable {
 	}
 
 	
-	public Dish(String name, double weight, Ingredient... ingredients) {
+	public Dish(String name, PartOfTheDish... ingredients) {
 		this.name = name;
-		this.weight = weight;
-		this.ingredients = new ArrayList<Ingredient>();
+		this.weight = 0;
+		this.counter = new Counter();
+		this.ingredients = new ArrayList<PartOfTheDish>();
 		for (int i = 0; i < ingredients.length; i++) {
 			this.ingredients.add(ingredients[i]);
+			this.weight += ingredients[i].getMass();
 		}
+		calculateFeatures();
 	}
 	
 	
-	public List<Ingredient> getIngredients() {
+	public List<PartOfTheDish> getIngredients() {
 		return ingredients;
 	}
 
-	public void setIngredients(List<Ingredient> ingredients) {
+	public void setIngredients(List<PartOfTheDish> ingredients) {
 		this.ingredients = ingredients;
 	}
 
@@ -66,12 +69,12 @@ public class Dish implements Calculating, Serializable {
 
 	@Override
 	public void calculateFeatures() {
-		for (Iterator iterator = ingredients.iterator(); iterator.hasNext();) {
-			Ingredient ingredient = (Ingredient) iterator.next();
-			this.counter.setCalories((ingredient.getFeature().getCaloriesContent() * this.weight) / 100);
-			this.counter.setCarbohydrates((ingredient.getFeature().getHydrocarbonatesContent() * this.weight) / 100);
-			this.counter.setFat((ingredient.getFeature().getFatContent() * this.weight) / 100);
-			this.counter.setProteins((ingredient.getFeature().getProteinsContent() * this.weight) / 100);
+		for (Iterator<PartOfTheDish> iterator = ingredients.iterator(); iterator.hasNext();) {
+			PartOfTheDish ingredient = (PartOfTheDish) iterator.next();
+			this.counter.addCalories(ingredient.getCounter().getCalories());
+			this.counter.addCarbons(ingredient.getCounter().getCarbohydrates());
+			this.counter.addFat(ingredient.getCounter().getFat());
+			this.counter.addProteins(ingredient.getCounter().getProteins());
 		}
 
 	}

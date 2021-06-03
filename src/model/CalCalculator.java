@@ -1,75 +1,53 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class CalCalculator implements Serializable{ /**     	// Calories Calculator
-	 * 
-	 */
-	private static final long serialVersionUID = 3921001348348161791L;
-
+/**
+ * @author Владислав
+ *	
+ */
+public class CalCalculator implements Serializable {
 	
-	private double caloriesNeed; // count of calories need a day
-	private double proteinsNeed; // count of proteins need a day
-	private double fatNeed; // count of fats need a day
-	private double carbohydratesNeed; // count of carbohydrates need a day
+	private static final long serialVersionUID = 3921001348348161791L;
+	
+	
+
+	private UserGoal userGoal;		//contains info about count of calories, proteins etc. user need to take a day
+	
+	
 
 	public CalCalculator() {
 
 	}
-
-	public CalCalculator(double calories, double proteins, double fat, double hydrocarbonates) {
-		this.caloriesNeed = calories;
-		this.proteinsNeed = proteins;
-		this.fatNeed = fat;
-		this.carbohydratesNeed = hydrocarbonates;
+	
+	public CalCalculator(UserGoal goal) {
+		this.userGoal = goal;
 	}
-
+	
+	
 	public double caloriesEaten(Day day) {
-		return (this.caloriesNeed / day.getCounter().getCalories()) * 100 ;
+		return (this.userGoal.getCaloriesNeed() / day.getCounter().getCalories()) * 100 ;
 	}
 
 	public double fatsEaten(Day day) {
-		return (this.fatNeed / day.getCounter().getFat()) * 100 ;
+		return (this.userGoal.getFatNeed() / day.getCounter().getFat()) * 100 ;
 	}
 
 	public double proteinsEaten(Day day) {
-		return (this.proteinsNeed / day.getCounter().getProteins()) * 100 ;
+		return (this.userGoal.getProteinsNeed() / day.getCounter().getProteins()) * 100 ;
 	}
 
 	public double carbohydratesEaten(Day day) {
-		return (this.carbohydratesNeed / day.getCounter().getCarbohydrates()) * 100 ;
+		return (this.userGoal.getCarbohydratesNeed() / day.getCounter().getCarbohydrates()) * 100 ;
 	}
 
-	public double getCaloriesNeed() {
-		return caloriesNeed;
+	public UserGoal getUserGoal() {
+		return userGoal;
 	}
 
-	public void setCaloriesNeed(double caloriesNeed) {
-		this.caloriesNeed = caloriesNeed;
-	}
-
-	public double getProteinsNeed() {
-		return proteinsNeed;
-	}
-
-	public void setProteinsNeed(double proteinsNeed) {
-		this.proteinsNeed = proteinsNeed;
-	}
-
-	public double getFatNeed() {
-		return fatNeed;
-	}
-
-	public void setFatNeed(double fatNeed) {
-		this.fatNeed = fatNeed;
-	}
-
-	public double getCarbohydratesNeed() {
-		return carbohydratesNeed;
-	}
-
-	public void setCarbohydratesNeed(double carbohydratesNeed) {
-		this.carbohydratesNeed = carbohydratesNeed;
+	public void setUserGoal(UserGoal userGoal) {
+		this.userGoal = userGoal;
 	}
 
 }

@@ -1,36 +1,30 @@
 package view;
 
-import java.awt.CardLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-import view.panels.FoodPanel;
+import model.User;
+import view.controller.MyActionListener;
 import view.panels.LoginPanel;
-import view.panels.MainMenuPanel;
+import view.panels.menu.MenuPanel;
 
 public class Frame extends JFrame {
-	private CardLayout cards;
 	private LoginPanel loginPanel;
-	private MainMenuPanel menuPanel;
-	private FoodPanel foodPanel;
-	
+	private MenuPanel menuPanel;
+
 	public Frame() {
-		this.setSize(500, 400);
-		this.setLocation(100, 100);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.cards = new CardLayout();
-		this.loginPanel = new LoginPanel();
-		this.menuPanel = new MainMenuPanel();
-		this.foodPanel = new FoodPanel();
-	}
-	
-	
-	public CardLayout getCards() {
-		return cards;
+
 	}
 
-	public void setCards(CardLayout cards) {
-		this.cards = cards;
+	public void init(MyActionListener listener, User user) {
+		this.setSize(650, 420);
+		this.setLocation(100, 100);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.loginPanel = new LoginPanel(listener);
+		this.menuPanel = new MenuPanel(listener);
+		this.getContentPane().add(this.loginPanel);
+		this.setVisible(true);
 	}
 
 	public LoginPanel getLoginPanel() {
@@ -41,20 +35,12 @@ public class Frame extends JFrame {
 		this.loginPanel = loginPanel;
 	}
 
-	public MainMenuPanel getMenuPanel() {
+	public MenuPanel getMenuPanel() {
 		return menuPanel;
 	}
 
-	public void setMenuPanel(MainMenuPanel menuPanel) {
+	public void setMenuPanel(MenuPanel menuPanel) {
 		this.menuPanel = menuPanel;
-	}
-
-	public FoodPanel getFoodPanel() {
-		return foodPanel;
-	}
-
-	public void setFoodPanel(FoodPanel foodPanel) {
-		this.foodPanel = foodPanel;
 	}
 
 }

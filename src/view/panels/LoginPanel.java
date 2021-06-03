@@ -10,27 +10,35 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import main.AppConstants;
+import view.controller.MyActionListener;
 
 public class LoginPanel extends JPanel {
 	private JPanel registrationPanel, singInPanel;
-	private JTextField nameField, weightField, loginField;
-	private CardLayout cards;
-	private JButton createNewUserBtn, enterBtn;
+	private JTextField newUserNameField, weightField, loginField;
+	private JButton createNewUserBtn, enterBtn, goToRegistration;
 
 	public LoginPanel() {
 		super();
-		init();
 	}
 
-	public void init() {
-		this.cards = new CardLayout();
-		this.setLayout(cards);
+	public LoginPanel(MyActionListener listener) {
+
+		this.enterBtn = new JButton("Войти");
+		this.enterBtn.addActionListener(listener);
+		this.enterBtn.setActionCommand(listener.SIGNIN);
+
+		this.createNewUserBtn = new JButton("Продолжить");
+		this.createNewUserBtn.addActionListener(listener);
+		this.createNewUserBtn.setActionCommand(listener.REGISTRATION);
+		
+		this.goToRegistration = new JButton("Зарегистрироваться");
+		this.goToRegistration.setActionCommand(listener.TOREGISTRATION);
+		this.goToRegistration.addActionListener(listener);
+
 		this.singInPanel = signInPanel();
 		this.registrationPanel = initRegistrationPanel();
-		this.add(this.singInPanel, AppConstants.SIGNINPANEL);
-		this.add(this.registrationPanel, AppConstants.REGISTRATIONPANEL);
+
+		this.add(this.singInPanel);
 	}
 
 	private JPanel initRegistrationPanel() {
@@ -39,34 +47,50 @@ public class LoginPanel extends JPanel {
 		registrationPanel.add(addNorthRegistrationPanel(), BorderLayout.NORTH);
 
 		JLabel nameLabel = new JLabel("Введите имя");
-		this.nameField = new JTextField(20);
+		this.newUserNameField = new JTextField(20);
 
 		JLabel weightLabel = new JLabel("Введите вес");
 		this.weightField = new JTextField(5);
 
 		JPanel panel = new JPanel(new GridLayout(2, 2));
 		panel.add(nameLabel);
-		panel.add(nameField);
+		panel.add(newUserNameField);
 		panel.add(weightLabel);
 		panel.add(weightField);
 
+		JLabel lab = new JLabel("Укажите ваш образ жизни");
+		JCheckBox lifeStyle1 = new JCheckBox("Сидячий");
+		JCheckBox lifeStyle2 = new JCheckBox("Активный");
+		JCheckBox lifeStyle3 = new JCheckBox("Спортивный");
+		JPanel lifeStylePanel = new JPanel(new BorderLayout());
+		lifeStylePanel.add(lab, BorderLayout.NORTH);
+		JPanel pan = new JPanel(new GridLayout(1, 3));
+		pan.add(lifeStyle1);
+		pan.add(lifeStyle2);
+		pan.add(lifeStyle3);
+
 		JCheckBox massBox = new JCheckBox("Хочу набрать массу");
 		JCheckBox loosingWeightBox = new JCheckBox("Хочу похудеть");
-		JCheckBox noChangesBox = new JCheckBox("Хочу просто держать себя в форме");
+		JCheckBox keepFitBox = new JCheckBox("Хочу просто держать себя в форме");
 
 		JPanel goalPanel = new JPanel();
 		goalPanel.add(loosingWeightBox);
-		goalPanel.add(noChangesBox);
+		goalPanel.add(keepFitBox);
 		goalPanel.add(massBox);
 
-		JPanel centerPanel = new JPanel(new GridLayout(2, 1));
+		JPanel centerPanel = new JPanel(new GridLayout(3, 1));
 		centerPanel.add(panel);
+		centerPanel.add(lifeStylePanel);
 		centerPanel.add(goalPanel);
-
+		
+//		JPanel center = new JPanel(new GridLayout(3,1));
+//
+//		center.add(centerPanel);
+//		center.add(createNewUserBtn);
+//		center.add(this.goToRegistration);
+		
 		registrationPanel.add(centerPanel, BorderLayout.CENTER);
-
-		this.createNewUserBtn = new JButton("Продолжить");
-		registrationPanel.add(createNewUserBtn, BorderLayout.SOUTH);
+		registrationPanel.add(this.createNewUserBtn, BorderLayout.SOUTH);
 
 		return registrationPanel;
 	}
@@ -99,15 +123,23 @@ public class LoginPanel extends JPanel {
 		loginField.setAlignmentY(CENTER_ALIGNMENT);
 
 		JPanel center = new JPanel(new BorderLayout());
+		
+		this.goToRegistration.setSize(60, 20);
+		
 		center.add(loginLab, BorderLayout.CENTER);
 		center.add(loginField, BorderLayout.CENTER);
 
-		this.enterBtn = new JButton("Войти");
-		center.add(enterBtn, BorderLayout.SOUTH);
+		center.add(this.enterBtn, BorderLayout.SOUTH);
 
 		JLabel inLabel = new JLabel("Вход");
-		signInPanel.add(inLabel, BorderLayout.NORTH);
+		JLabel inLabel2 = new JLabel("Введите имя");
+		JPanel inPanel = new JPanel(new GridLayout(2,1));
+		inPanel.add(inLabel);
+		inPanel.add(inLabel2);
+		
+		signInPanel.add(inPanel, BorderLayout.NORTH);
 		signInPanel.add(center, BorderLayout.CENTER);
+		signInPanel.add(this.goToRegistration, BorderLayout.SOUTH);
 		return signInPanel;
 	}
 
@@ -128,11 +160,11 @@ public class LoginPanel extends JPanel {
 	}
 
 	public JTextField getNameField() {
-		return nameField;
+		return newUserNameField;
 	}
 
 	public void setNameField(JTextField nameField) {
-		this.nameField = nameField;
+		this.newUserNameField = nameField;
 	}
 
 	public JTextField getWeightField() {
@@ -151,14 +183,6 @@ public class LoginPanel extends JPanel {
 		this.loginField = loginField;
 	}
 
-	public CardLayout getCards() {
-		return cards;
-	}
-
-	public void setCards(CardLayout cards) {
-		this.cards = cards;
-	}
-
 	public JButton getCreateNewUserBtn() {
 		return createNewUserBtn;
 	}
@@ -173,6 +197,14 @@ public class LoginPanel extends JPanel {
 
 	public void setEnterBtn(JButton enterBtn) {
 		this.enterBtn = enterBtn;
+	}
+
+	public JTextField getNewUserNameField() {
+		return newUserNameField;
+	}
+
+	public void setNewUserNameField(JTextField newUserNameField) {
+		this.newUserNameField = newUserNameField;
 	}
 
 }

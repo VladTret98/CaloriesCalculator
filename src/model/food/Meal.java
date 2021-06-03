@@ -27,13 +27,12 @@ public class Meal implements Calculating, Serializable {
 		for (int i = 0; i < dishes.length; i++) {
 			this.dishes.add(dishes[i]);
 		}
-
+		calculateFeatures();
 	}
-	
-	
-	
+
 	/**
-	 * @param dish new dish added to a meal, this method adds features of dish to sum of features in one meal
+	 * @param dish new dish added to a meal, this method adds features of dish to
+	 *             sum of features in one meal
 	 */
 	public void addDish(Dish dish) {
 		this.dishes.add(dish);
@@ -57,6 +56,14 @@ public class Meal implements Calculating, Serializable {
 
 	public void setCounter(Counter counter) {
 		this.counter = counter;
+	}
+
+	public List<Dish> getDishes() {
+		return dishes;
+	}
+
+	public void setDishes(List<Dish> dishes) {
+		this.dishes = dishes;
 	}
 
 	@Override
