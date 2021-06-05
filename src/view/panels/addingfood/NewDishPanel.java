@@ -20,10 +20,10 @@ import view.controller.MyActionListener;
 public class NewDishPanel extends JPanel {
 	private JTextField nameField;
 	private List<IngredientPanel> ingredientsPanels;
-	private JButton addIngredientBtn;
+	private JButton addIngredientBtn, addBtn;
 	private JScrollPane ingredientsPane;
 
-	public NewDishPanel() {
+	public NewDishPanel(MyActionListener listener) {
 		this.setLayout(new BorderLayout());
 
 		this.ingredientsPanels = new ArrayList<IngredientPanel>();
@@ -32,7 +32,10 @@ public class NewDishPanel extends JPanel {
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		this.ingredientsPane = new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		//this.ingredientsPane.setLayout(new BoxLayout(this.ingredientsPane, BoxLayout.Y_AXIS));
+		
+		this.addBtn = new JButton("Добавить блюдо");
+		this.addBtn.addActionListener(listener);
+		this.addBtn.setActionCommand(listener.ADDDISH);
 
 		this.addIngredientBtn = new JButton("+");
 		this.addIngredientBtn.setActionCommand("Добавить ингредиент");
@@ -47,10 +50,10 @@ public class NewDishPanel extends JPanel {
 				revalidate();
 			}
 		});
-		init(p);
-	}
-
-	public void init(JPanel p) {
+//		init(p);
+//	}
+//
+//	public void init(JPanel p) {
 		JPanel p1 = new JPanel(new GridLayout(1, 2));
 		p1.add(new JLabel("Название"));
 		p1.add(this.nameField = new JTextField(20));
@@ -59,11 +62,15 @@ public class NewDishPanel extends JPanel {
 		for (int i = 0; i < 2; i++) {
 			IngredientPanel panel = new IngredientPanel();
 			p.add(panel);
+			this.ingredientsPanels.add(panel);
 		}
 
-		this.add(this.ingredientsPane, BorderLayout.CENTER);
-
-		this.add(this.addIngredientBtn, BorderLayout.SOUTH);
+		JPanel centerPanel = new JPanel(new BorderLayout());
+		centerPanel.add(this.ingredientsPane, BorderLayout.CENTER);
+		centerPanel.add(this.addIngredientBtn, BorderLayout.SOUTH);
+		
+		this.add(centerPanel, BorderLayout.CENTER);
+		this.add(addBtn, BorderLayout.SOUTH);
 	}
 
 	public JTextField getNameField() {

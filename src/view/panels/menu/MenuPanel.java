@@ -3,6 +3,7 @@ package view.panels.menu;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
@@ -22,16 +23,25 @@ public class MenuPanel extends JPanel {
 	}
 
 	public MenuPanel(MyActionListener listener) {
-		this.setLayout(new GridLayout(1, 2));
+		this.setLayout(new BorderLayout());
+		
 		this.listener = listener;
 	}
 
 	public void init(User user) {
+		JPanel menu = new JPanel();		
+		menu.setLayout(new GridLayout(1, 2));
+		
+		if(user.getActiveDay().getDishes() != null) {
+			
+		
+		
 		this.user = user;
 		
 		this.dayResultPanel = new DayResultPanel();
+		this.dayResultPanel.init(user);
 		
-		this.infoPanel = new DayInfoPanel(this.listener, user.getDays().get(user.getDays().size() - 1));
+		this.infoPanel = new DayInfoPanel(this.listener, user.getActiveDay());
 		
 		this.foodPanel = new FoodPanel();
 		this.foodPanel.init();
@@ -41,7 +51,17 @@ public class MenuPanel extends JPanel {
 		JSplitPane pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, infoPanel, foodPanel);
 		pane.setDividerSize(8);
 				
-		this.add(pane);
+		menu.add(pane);
+		this.add(dayResultPanel, BorderLayout.NORTH);
+		this.add(menu, BorderLayout.CENTER);
+		this.repaint();
+		this.revalidate();
+		} else {
+			JButton button = new JButton("Добавить блюдо");
+			button.addActionListener(listener);
+			button.setActionCommand(listener.GOTOADDDISH);
+			this.add(button);
+		}
 	}
 
 	public DayResultPanel getDayResultPanel() {

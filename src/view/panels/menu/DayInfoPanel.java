@@ -13,11 +13,11 @@ import javax.swing.JScrollPane;
 
 import model.Day;
 import model.User;
-import model.food.Meal;
+import model.food.Dish;
 import view.controller.MyActionListener;
 
 public class DayInfoPanel extends JPanel {
-	private Meal selectedMeal;
+	private Dish selectedDish;
 	private JButton selectNextDayBtn, selectPreviousDayBtn, showInformationBtn, addMealBtn;
 	private MyActionListener listener;
 
@@ -27,17 +27,32 @@ public class DayInfoPanel extends JPanel {
 	
 	public void init(User user) {
 		this.removeAll();
-		createInfoPanel(user.getDays().get(user.getDays().size() - 1));
+		createInfoPanel(user.getActiveDay());
 		this.repaint();
 		this.revalidate();
 	}
 
+	
+	
+	public DayInfoPanel(MyActionListener listener,User user) {
+		this.setLayout(new BorderLayout());
+		this.listener = listener;
+		
+		this.addMealBtn = new JButton("Добавить съеденное блюдо");
+		this.addMealBtn.setActionCommand(listener.GOTOADDDISH);
+		this.addMealBtn.addActionListener(listener);
+		createInfoPanel(user.getActiveDay());
+		}
+	
+	
+	
+	
 	public DayInfoPanel(MyActionListener listener, Day day) {
 		this.setLayout(new BorderLayout());
 		this.listener = listener;
 		
-		this.addMealBtn = new JButton("Добавить прием пищи");
-		this.addMealBtn.setActionCommand(listener.ADDMEAL);
+		this.addMealBtn = new JButton("Добавить съеденное блюдо");
+		this.addMealBtn.setActionCommand(listener.GOTOADDDISH);
 		this.addMealBtn.addActionListener(listener);
 
 		this.selectNextDayBtn = new JButton("---->");
@@ -51,24 +66,30 @@ public class DayInfoPanel extends JPanel {
 		createInfoPanel(day);
 	}
 
+
 	public void createInfoPanel(Day day) {
 		JPanel infoPanel = new JPanel(new GridLayout(2, 1));
-
-		JPanel panel = new JPanel(new GridLayout(day.getMeals().size() + 1, 1));
+		if(day.getDishes() == null) {/////
+			JPanel panel = new JPanel(new GridLayout(1, 1));		/////
+		} else {													///////
+			JPanel panel = new JPanel(new GridLayout(day.getDishes().size() + 1, 1));
+		
+		
 
 		JScrollPane pane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-		for (Iterator<Meal> iterator = day.getMeals().iterator(); iterator.hasNext();) {
-			Meal meal = (Meal) iterator.next();
-			panel.add(createMealsPanel(meal, listener));
+		for (Iterator<Dish> iterator = day.getDishes().iterator(); iterator.hasNext();) {
+			Dish dish = (Dish) iterator.next();
+			panel.add(createDishesPanel(dish, listener));
 		}
 
-			
 		
-		JPanel dayChoicePanel = new JPanel(new GridLayout(1, 2, 30, 0));
-		dayChoicePanel.add(this.selectPreviousDayBtn);
-		dayChoicePanel.add(this.selectNextDayBtn);
+		
+		JPanel dayChoicePanel = new JPanel(new BorderLayout());
+		dayChoicePanel.add(this.selectPreviousDayBtn, BorderLayout.WEST);
+		dayChoicePanel.add(new JLabel(day.getDate().toString()), BorderLayout.CENTER);
+		dayChoicePanel.add(this.selectNextDayBtn, BorderLayout.EAST);
 		
 		JPanel p = new JPanel(new BorderLayout());
 		p.add(this.addMealBtn, BorderLayout.NORTH);	
@@ -78,15 +99,20 @@ public class DayInfoPanel extends JPanel {
 		infoPanel.add(p);
 
 		this.add(infoPanel, BorderLayout.CENTER);
+		
+		this.repaint();
+		this.revalidate();
+		}/////////
 	}
 
-	private JPanel createMealsPanel(Meal meal, MyActionListener listener) {
+	private JPanel createDishesPanel(Dish dish, MyActionListener listener) {
 		JPanel main = new JPanel(new GridLayout(2, 1));
 
-		JLabel lab = new JLabel(meal.getName());
+		
+		JLabel lab = new JLabel(dish.getName());
 		lab.setAlignmentX(CENTER_ALIGNMENT);
 
-		this.selectedMeal = null;
+		this.selectedDish = null;
 
 		JButton btn = new JButton("Подробнее");
 		btn.setActionCommand("SHOW");
@@ -95,33 +121,33 @@ public class DayInfoPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if ("SHOW".equals(e.getActionCommand())) {
-					selectedMeal = meal;
+					selectedDish = dish;
 					listener.actionPerformed(new ActionEvent(btn, WIDTH, listener.SHOWINFORMATION));
 				}
 			}
 		});
 
 		JPanel panel = new JPanel(new GridLayout(2, 1));
-		panel.add(lab);
+		panel.add(lab);								
 		panel.add(btn);
 
 		JPanel info = new JPanel(new GridLayout(1, 4));
 
 		JPanel p1 = new JPanel(new GridLayout(2, 1));
 		p1.add(new JLabel("Калории"));
-		p1.add(new JLabel(String.valueOf(meal.getCounter().getCalories())));
+		p1.add(new JLabel(String.valueOf(dish.getCounter().getCalories())));
 
 		JPanel p2 = new JPanel(new GridLayout(2, 1));
 		p2.add(new JLabel("Белки"));
-		p2.add(new JLabel(String.valueOf(meal.getCounter().getProteins())));
+		p2.add(new JLabel(String.valueOf(dish.getCounter().getProteins())));
 
 		JPanel p3 = new JPanel(new GridLayout(2, 1));
 		p3.add(new JLabel("Углеводы"));
-		p3.add(new JLabel(String.valueOf(meal.getCounter().getCarbohydrates())));
+		p3.add(new JLabel(String.valueOf(dish.getCounter().getCarbohydrates())));
 
 		JPanel p4 = new JPanel(new GridLayout(2, 1));
 		p4.add(new JLabel("Жиры"));
-		p4.add(new JLabel(String.valueOf(meal.getCounter().getFat())));
+		p4.add(new JLabel(String.valueOf(dish.getCounter().getFat())));
 
 		info.add(p1);
 		info.add(p2);
@@ -134,12 +160,12 @@ public class DayInfoPanel extends JPanel {
 		return main;
 	}
 
-	public Meal getSelectedMeal() {
-		return selectedMeal;
+	public Dish getSelectedMeal() {
+		return selectedDish;
 	}
 
-	public void setSelectedMeal(Meal selectedMeal) {
-		this.selectedMeal = selectedMeal;
+	public void setSelectedDish(Dish selectedDish) {
+		this.selectedDish = selectedDish;
 	}
 
 	public JButton getSelectNextDayBtn() {

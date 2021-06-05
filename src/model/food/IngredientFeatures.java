@@ -1,6 +1,12 @@
 package model.food;
 
-public class IngredientFeatures {
+import java.io.Serializable;
+
+public class IngredientFeatures implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2219206587311318392L;
 	private double caloriesContent;
 	private double proteinsContent;
 	private double fatContent;

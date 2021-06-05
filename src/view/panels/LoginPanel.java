@@ -16,6 +16,7 @@ public class LoginPanel extends JPanel {
 	private JPanel registrationPanel, singInPanel;
 	private JTextField newUserNameField, weightField, loginField;
 	private JButton createNewUserBtn, enterBtn, goToRegistration;
+	private JCheckBox lifeStyle1, lifeStyle2, lifeStyle3, massBox, loosingWeightBox, keepFitBox;
 
 	public LoginPanel() {
 		super();
@@ -41,7 +42,7 @@ public class LoginPanel extends JPanel {
 		this.add(this.singInPanel);
 	}
 
-	private JPanel initRegistrationPanel() {
+	public JPanel initRegistrationPanel() {
 		JPanel registrationPanel = new JPanel(new BorderLayout());
 
 		registrationPanel.add(addNorthRegistrationPanel(), BorderLayout.NORTH);
@@ -59,19 +60,21 @@ public class LoginPanel extends JPanel {
 		panel.add(weightField);
 
 		JLabel lab = new JLabel("Укажите ваш образ жизни");
-		JCheckBox lifeStyle1 = new JCheckBox("Сидячий");
-		JCheckBox lifeStyle2 = new JCheckBox("Активный");
-		JCheckBox lifeStyle3 = new JCheckBox("Спортивный");
+		lab.setAlignmentX(CENTER_ALIGNMENT);
+		this.lifeStyle1 = new JCheckBox("Сидячий");
+		this.lifeStyle2 = new JCheckBox("Активный");
+		this.lifeStyle3 = new JCheckBox("Спортивный");
 		JPanel lifeStylePanel = new JPanel(new BorderLayout());
 		lifeStylePanel.add(lab, BorderLayout.NORTH);
 		JPanel pan = new JPanel(new GridLayout(1, 3));
 		pan.add(lifeStyle1);
 		pan.add(lifeStyle2);
 		pan.add(lifeStyle3);
+		lifeStylePanel.add(pan, BorderLayout.CENTER);
 
-		JCheckBox massBox = new JCheckBox("Хочу набрать массу");
-		JCheckBox loosingWeightBox = new JCheckBox("Хочу похудеть");
-		JCheckBox keepFitBox = new JCheckBox("Хочу просто держать себя в форме");
+		this.massBox = new JCheckBox("Хочу набрать массу");
+		this.loosingWeightBox = new JCheckBox("Хочу похудеть");
+		this.keepFitBox = new JCheckBox("Хочу просто держать себя в форме");
 
 		JPanel goalPanel = new JPanel();
 		goalPanel.add(loosingWeightBox);
@@ -82,12 +85,6 @@ public class LoginPanel extends JPanel {
 		centerPanel.add(panel);
 		centerPanel.add(lifeStylePanel);
 		centerPanel.add(goalPanel);
-		
-//		JPanel center = new JPanel(new GridLayout(3,1));
-//
-//		center.add(centerPanel);
-//		center.add(createNewUserBtn);
-//		center.add(this.goToRegistration);
 		
 		registrationPanel.add(centerPanel, BorderLayout.CENTER);
 		registrationPanel.add(this.createNewUserBtn, BorderLayout.SOUTH);
@@ -141,6 +138,18 @@ public class LoginPanel extends JPanel {
 		signInPanel.add(center, BorderLayout.CENTER);
 		signInPanel.add(this.goToRegistration, BorderLayout.SOUTH);
 		return signInPanel;
+	}
+	
+	public double getSelectedLifeStyle() {
+		if (this.lifeStyle1.isSelected()) return 1;
+		else if (this.lifeStyle2.isSelected()) return 1.3;
+		else return 1.5;
+	}
+	
+	public int getGoal() {
+		if (this.massBox.isSelected()) return 3;
+		else if (this.loosingWeightBox.isSelected()) return 1;
+		else return 2;
 	}
 
 	public JPanel getRegistrationPanel() {
@@ -206,5 +215,7 @@ public class LoginPanel extends JPanel {
 	public void setNewUserNameField(JTextField newUserNameField) {
 		this.newUserNameField = newUserNameField;
 	}
+	
+	
 
 }

@@ -1,5 +1,6 @@
 package view.panels.addingfood;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -11,11 +12,23 @@ public class IngredientPanel extends JPanel {
 
 	public IngredientPanel() {
 		this.nameField = new JTextField(20);
+		this.nameField.setPreferredSize(new Dimension(50,25));
+		
 		this.caloriesfield = new JTextField(5);
+		this.caloriesfield.setPreferredSize(new Dimension(50,25));
+		
 		this.proteinsField = new JTextField(5);
+		this.proteinsField.setPreferredSize(new Dimension(50,25));
+		
 		this.fatField = new JTextField(5);
+		this.fatField.setPreferredSize(new Dimension(50,25));
+		
 		this.carbonsField = new JTextField(5);
+		this.carbonsField.setPreferredSize(new Dimension(50,25));
+		
 		this.massField = new JTextField(7);
+		this.massField.setPreferredSize(new Dimension(50,25));
+		
 		init();
 	}
 	

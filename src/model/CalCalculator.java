@@ -27,19 +27,19 @@ public class CalCalculator implements Serializable {
 	
 	
 	public double caloriesEaten(Day day) {
-		return (this.userGoal.getCaloriesNeed() / day.getCounter().getCalories()) * 100 ;
+		return (day.getCounter().getCalories()) / this.userGoal.getCaloriesNeed();
 	}
 
 	public double fatsEaten(Day day) {
-		return (this.userGoal.getFatNeed() / day.getCounter().getFat()) * 100 ;
+		return (day.getCounter().getFat()) / this.userGoal.getFatNeed();
 	}
 
 	public double proteinsEaten(Day day) {
-		return (this.userGoal.getProteinsNeed() / day.getCounter().getProteins()) * 100 ;
+		return (day.getCounter().getProteins()) / this.userGoal.getProteinsNeed();
 	}
 
 	public double carbohydratesEaten(Day day) {
-		return (this.userGoal.getCarbohydratesNeed() / day.getCounter().getCarbohydrates()) * 100 ;
+		return (day.getCounter().getCarbohydrates()) / this.userGoal.getCarbohydratesNeed();
 	}
 
 	public UserGoal getUserGoal() {

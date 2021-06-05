@@ -11,10 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import model.food.Dish;
-import model.food.Meal;
+import model.food.Ingredient;
+import model.food.PartOfTheDish;
 
 public class FoodPanel extends JPanel {
-	private Meal meal;
+	private Dish dish;
 
 	public FoodPanel() {
 		super();
@@ -30,17 +31,17 @@ public class FoodPanel extends JPanel {
 		this.revalidate();
 	}
 
-	public void setMealInfo(Meal meal) {
+	public void setDishInfo(Dish dish) {
 		this.removeAll();
 		JPanel main = new JPanel(new BorderLayout());
 
-		JPanel panel = new JPanel(new GridLayout(meal.getDishes().size(), 1));
+		JPanel panel = new JPanel(new GridLayout(dish.getIngredients().size(), 1));
 
-		for (Iterator<Dish> iterator = meal.getDishes().iterator(); iterator.hasNext();) {
-			Dish dish = (Dish) iterator.next();
+		for (Iterator<PartOfTheDish> iterator = dish.getIngredients().iterator(); iterator.hasNext();) {
+			PartOfTheDish part = (PartOfTheDish) iterator.next();
 			JPanel dishPanel = new JPanel(new BorderLayout());
-			dishPanel.add(new JLabel(dish.getName()));
-			dishPanel.add(new JLabel(dish.toString()), BorderLayout.CENTER);
+			dishPanel.add(new JLabel(part.getIngredient().getName()));
+			dishPanel.add(new JLabel(part.toString()), BorderLayout.CENTER);
 			panel.add(dishPanel);
 		}
 
@@ -54,12 +55,12 @@ public class FoodPanel extends JPanel {
 		this.revalidate();
 	}
 
-	public Meal getMeal() {
-		return meal;
+	public Dish getDish() {
+		return dish;
 	}
 
-	public void setMeal(Meal meal) {
-		this.meal = meal;
+	public void setDish(Dish dish) {
+		this.dish = dish;
 	}
 
 }

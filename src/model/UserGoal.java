@@ -1,10 +1,16 @@
 package model;
 
+import java.io.Serializable;
+
 import main.AppConstants;
 
-public class UserGoal {
+public class UserGoal  implements Serializable{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1729947881455592273L;
 	private double caloriesNeed; // count of calories user need to take a day
 	private double proteinsNeed; // count of proteins user need to take a day
 	private double fatNeed; // count of fats user need to take a day
