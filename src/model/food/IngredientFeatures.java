@@ -2,7 +2,7 @@ package model.food;
 
 import java.io.Serializable;
 
-public class IngredientFeatures implements Serializable{
+public class IngredientFeatures implements Serializable {
 	/**
 	 * 
 	 */
@@ -21,6 +21,12 @@ public class IngredientFeatures implements Serializable{
 		this.proteinsContent = proteins;
 		this.fatContent = fat;
 		this.carbohydratesContent = hydrocarbonates;
+	}
+
+	@Override
+	public String toString() {
+		return "IngredientFeatures [caloriesContent=" + caloriesContent + ", proteinsContent=" + proteinsContent
+				+ ", fatContent=" + fatContent + ", carbohydratesContent=" + carbohydratesContent + "]";
 	}
 
 	public double getCaloriesContent() {

@@ -28,6 +28,11 @@ public class PartOfTheDish implements Calculating, Serializable {
 		calculateFeatures();
 	}
 
+	@Override
+	public String toString() {
+		return "PartOfTheDish [ingredient=" + ingredient + ", counter=" + counter + ", mass=" + mass + "]";
+	}
+
 	public Ingredient getIngredient() {
 		return ingredient;
 	}

@@ -22,6 +22,11 @@ public class Ingredient implements Serializable {
 		this.feature = new IngredientFeatures(calories, proteins, fat, carbohydrates);
 	}
 
+	@Override
+	public String toString() {
+		return "Ingredient [name=" + name + ", feature=" + feature + "]";
+	}
+
 	public String getName() {
 		return name;
 	}
